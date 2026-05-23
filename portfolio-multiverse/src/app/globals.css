@@ -1,26 +1,383 @@
-@import "tailwindcss";
+/* ═══════════════════════════════════════════════════════════════════════════
+   PORTFOLIO MULTIVERSE — DESIGN TOKENS
+   Cada bloco [data-theme="..."] define o universo visual completo.
+   A troca de tema manipula apenas o atributo data-theme no <html>.
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── FONTES EXTERNAS ───────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;700&family=Press+Start+2P&display=swap');
+
+@font-face {
+  font-family: "VT323";
+  src: url('/fonts/VT323-Regular.ttf') format('truetype');
+  font-display: swap;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@font-face {
+  font-family: "Rye";
+  src: url('/fonts/Rye-Regular.ttf') format('truetype');
+  font-display: swap;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── RESET BASE ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   🌑 TEMA 1: PADRÃO — Tech Minimalist Premium
+   Fundo escuro, partículas, tipografia geométrica, elegância sutil.
+   ─────────────────────────────────────────────────────────────────────────*/
+:root,
+[data-theme="default"] {
+  /* Cores */
+  --color-bg:           #080C14;
+  --color-surface:      #0D1420;
+  --color-surface-2:    #111927;
+  --color-border:       rgba(255, 255, 255, 0.07);
+  --color-primary:      #6366F1;
+  --color-primary-glow: rgba(99, 102, 241, 0.35);
+  --color-secondary:    #22D3EE;
+  --color-accent:       #F472B6;
+  --color-text:         #E8EAF0;
+  --color-text-muted:   #8892A4;
+  --color-text-dim:     #4A5568;
+  --color-overlay:      rgba(8, 12, 20, 0.85);
+
+  /* Tipografia */
+  --font-display: "Space Grotesk";
+  --font-body:    "Space Grotesk";
+  --font-mono:    "DM Mono";
+  --font-accent:  "Playfair Display";
+
+  /* Sombras */
+  --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md:   0 4px 16px rgba(0, 0, 0, 0.6);
+  --shadow-lg:   0 16px 48px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.25);
+
+  /* Forma */
+  --radius: 12px;
+
+  /* Efeitos temáticos */
+  --theme-particle-color: rgba(99, 102, 241, 0.6);
+  --theme-scanlines: none;
+  --theme-film-grain: none;
+  --theme-border-style: solid;
+  --theme-button-style: "pill";
+  --theme-nav-style: "floating";
+
+  /* Cursor */
+  --cursor: default;
+  --cursor-color: #6366F1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   📟 TEMA 2: ANOS 2000 — Retro Web / Orkut / MSN / Windows XP
+   Cores saturadas, bordas retas, visual tabelado, nostalgia nerd.
+   ─────────────────────────────────────────────────────────────────────────*/
+[data-theme="retro2000"] {
+  /* Cores */
+  --color-bg:           #1A1A5E;
+  --color-surface:      #2020A0;
+  --color-surface-2:    #0D0D8A;
+  --color-border:       #6666FF;
+  --color-primary:      #00FF00;
+  --color-primary-glow: rgba(0, 255, 0, 0.4);
+  --color-secondary:    #FF6600;
+  --color-accent:       #FFFF00;
+  --color-text:         #FFFFFF;
+  --color-text-muted:   #AAAAFF;
+  --color-text-dim:     #6666FF;
+  --color-overlay:      rgba(26, 26, 94, 0.92);
+
+  /* Tipografia */
+  --font-display: "VT323", "Courier New", monospace;
+  --font-body:    "Courier New", monospace;
+  --font-mono:    "Courier New", monospace;
+  --font-accent:  "Times New Roman", serif;
+
+  /* Sombras */
+  --shadow-sm:   2px 2px 0px #00FF00;
+  --shadow-md:   4px 4px 0px #00FF00;
+  --shadow-lg:   8px 8px 0px #00FF00;
+  --shadow-glow: 0 0 20px rgba(0, 255, 0, 0.5), 0 0 40px rgba(0, 255, 0, 0.2);
+
+  /* Forma */
+  --radius: 0px; /* Cantos retos — estilo anos 2000 */
+
+  /* Efeitos temáticos */
+  --theme-particle-color: rgba(0, 255, 0, 0.5);
+  --theme-border-style: solid;
+
+  /* Scrollbar clássica */
+  scrollbar-color: #00FF00 #0D0D8A;
+  scrollbar-width: thin;
+}
+
+[data-theme="retro2000"] ::-webkit-scrollbar {
+  width: 16px;
+}
+[data-theme="retro2000"] ::-webkit-scrollbar-track {
+  background: #0D0D8A;
+  border-left: 1px solid #6666FF;
+}
+[data-theme="retro2000"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6666FF 0%, #00FF00 100%);
+  border: 1px solid #FFFFFF;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   🤠 TEMA 3: VELHO OESTE — Western Cinematic
+   Tons terrosos, texturas de madeira, tipografia rústica, cinema seco.
+   ─────────────────────────────────────────────────────────────────────────*/
+[data-theme="western"] {
+  /* Cores */
+  --color-bg:           #1C1008;
+  --color-surface:      #2A1A0A;
+  --color-surface-2:    #3D2510;
+  --color-border:       rgba(210, 160, 80, 0.3);
+  --color-primary:      #D4943A;
+  --color-primary-glow: rgba(212, 148, 58, 0.3);
+  --color-secondary:    #C4572E;
+  --color-accent:       #E8C870;
+  --color-text:         #F0E0C0;
+  --color-text-muted:   #A8906A;
+  --color-text-dim:     #6A4E32;
+  --color-overlay:      rgba(28, 16, 8, 0.9);
+
+  /* Tipografia */
+  --font-display: "Rye", "Georgia", serif;
+  --font-body:    "Playfair Display", serif;
+  --font-mono:    "DM Mono", monospace;
+  --font-accent:  "Bebas Neue", "Impact", sans-serif;
+
+  /* Sombras */
+  --shadow-sm:   0 2px 4px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(212, 148, 58, 0.15);
+  --shadow-md:   0 4px 12px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(212, 148, 58, 0.1);
+  --shadow-lg:   0 12px 32px rgba(0, 0, 0, 0.95), 0 0 80px rgba(196, 87, 46, 0.1);
+  --shadow-glow: 0 0 30px rgba(212, 148, 58, 0.2);
+
+  /* Forma */
+  --radius: 4px; /* Mínimo — estilo madeira entalhada */
+
+  /* Efeitos temáticos */
+  --theme-particle-color: rgba(212, 148, 58, 0.3);
+  --theme-border-style: solid;
+  --theme-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   🕶️ TEMA 4: CYBERPUNK / HACKER
+   Terminal sci-fi, scanlines, neon verde/ciano, HUD futurista.
+   ─────────────────────────────────────────────────────────────────────────*/
+[data-theme="cyberpunk"] {
+  /* Cores */
+  --color-bg:           #000000;
+  --color-surface:      #001200;
+  --color-surface-2:    #001A00;
+  --color-border:       rgba(0, 255, 65, 0.25);
+  --color-primary:      #00FF41;
+  --color-primary-glow: rgba(0, 255, 65, 0.5);
+  --color-secondary:    #00D4FF;
+  --color-accent:       #FF0080;
+  --color-text:         #00FF41;
+  --color-text-muted:   rgba(0, 255, 65, 0.6);
+  --color-text-dim:     rgba(0, 255, 65, 0.3);
+  --color-overlay:      rgba(0, 0, 0, 0.92);
+
+  /* Tipografia */
+  --font-display: "IBM Plex Mono", monospace;
+  --font-body:    "IBM Plex Mono", monospace;
+  --font-mono:    "IBM Plex Mono", monospace;
+  --font-accent:  "Bebas Neue", sans-serif;
+
+  /* Sombras */
+  --shadow-sm:   0 0 8px rgba(0, 255, 65, 0.3);
+  --shadow-md:   0 0 20px rgba(0, 255, 65, 0.4);
+  --shadow-lg:   0 0 40px rgba(0, 255, 65, 0.3), 0 0 80px rgba(0, 255, 65, 0.1);
+  --shadow-glow: 0 0 20px rgba(0, 255, 65, 0.8), 0 0 60px rgba(0, 255, 65, 0.4);
+
+  /* Forma */
+  --radius: 2px; /* Quase sem arredondamento — estilo HUD militar */
+
+  /* Efeitos temáticos */
+  --theme-particle-color: rgba(0, 255, 65, 0.4);
+  --theme-border-style: solid;
+  --theme-scanlines-opacity: 0.08;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   🕹️ TEMA 5: ARCADE RETRO — 8-Bit / Pixel Art
+   Videogame de fliperama, pixel fonts, cores primárias saturadas, fun.
+   ─────────────────────────────────────────────────────────────────────────*/
+[data-theme="arcade"] {
+  /* Cores */
+  --color-bg:           #0A0014;
+  --color-surface:      #12002A;
+  --color-surface-2:    #1E003D;
+  --color-border:       #FF00FF;
+  --color-primary:      #FFE000;
+  --color-primary-glow: rgba(255, 224, 0, 0.5);
+  --color-secondary:    #00FFFF;
+  --color-accent:       #FF00FF;
+  --color-text:         #FFFFFF;
+  --color-text-muted:   #CC88FF;
+  --color-text-dim:     #7744BB;
+  --color-overlay:      rgba(10, 0, 20, 0.9);
+
+  /* Tipografia */
+  --font-display: "Press Start 2P", monospace;
+  --font-body:    "VT323", monospace;
+  --font-mono:    "Press Start 2P", monospace;
+  --font-accent:  "Press Start 2P", monospace;
+
+  /* Sombras */
+  --shadow-sm:   2px 2px 0 #000000, 4px 4px 0 rgba(255, 0, 255, 0.3);
+  --shadow-md:   4px 4px 0 #000000, 8px 8px 0 rgba(255, 0, 255, 0.2);
+  --shadow-lg:   6px 6px 0 #000000, 12px 12px 0 rgba(255, 0, 255, 0.2);
+  --shadow-glow: 0 0 10px #FFE000, 0 0 20px #FFE000, 0 0 40px rgba(255, 224, 0, 0.5);
+
+  /* Forma */
+  --radius: 0px; /* Pixel perfect — zero arredondamento */
+
+  /* Efeitos temáticos */
+  --theme-particle-color: rgba(255, 224, 0, 0.6);
+  --theme-border-style: dashed;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   UTILITÁRIOS GLOBAIS
+   ─────────────────────────────────────────────────────────────────────────*/
+
+/* Transição suave para mudanças de tema */
+.theme-transition * {
+  transition:
+    background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color     0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    color            0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow       0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Overlay de scanlines (Cyberpunk) */
+.scanlines-overlay::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+}
+
+/* Glitch layer helper */
+.glitch-wrapper {
+  position: relative;
+}
+.glitch-wrapper::before,
+.glitch-wrapper::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.glitch-wrapper::before {
+  color: var(--color-secondary);
+  animation: glitch-1 0.15s steps(1) infinite;
+}
+.glitch-wrapper::after {
+  color: var(--color-accent);
+  animation: glitch-2 0.15s steps(1) infinite;
+}
+
+/* Typewriter cursor */
+.typewriter-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--color-primary);
+  animation: blink-caret 0.75s step-end infinite;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+}
+
+/* Film grain overlay */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10%       { transform: translate(-2%, -3%); }
+  20%       { transform: translate(3%, 1%); }
+  30%       { transform: translate(-1%, 3%); }
+  40%       { transform: translate(2%, -2%); }
+  50%       { transform: translate(-3%, 2%); }
+  60%       { transform: translate(1%, -1%); }
+  70%       { transform: translate(3%, 3%); }
+  80%       { transform: translate(-2%, 1%); }
+  90%       { transform: translate(-1%, -3%); }
+}
+
+.film-grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  animation: grain 0.5s steps(1) infinite;
+}
+
+/* Borda pontilhada estilo pixel */
+.pixel-border {
+  border: var(--theme-border-style, solid) 2px var(--color-border);
+  image-rendering: pixelated;
+}
+
+/* Neon text helper */
+.neon-text {
+  text-shadow:
+    0 0 7px var(--color-primary),
+    0 0 10px var(--color-primary),
+    0 0 21px var(--color-primary),
+    0 0 42px var(--color-primary-glow);
+}
+
+/* Selection color */
+::selection {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+/* Focus ring acessível */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
 }
