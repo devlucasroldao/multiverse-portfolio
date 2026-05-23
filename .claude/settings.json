@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\lucas\\\\Documents\\\\MeusProjetos\\\\multiverse-portfolio\\\\portfolio-multiverse\\\\src\\\\app\\\\components\" -Recurse | ForEach-Object { \"$\\($_.FullName\\) — $\\($_.Length\\) bytes\" })",
+      "PowerShell(Set-Location \"c:\\\\Users\\\\lucas\\\\Documents\\\\MeusProjetos\\\\multiverse-portfolio\\\\portfolio-multiverse\"; $job = Start-Job -ScriptBlock { Set-Location \"c:\\\\Users\\\\lucas\\\\Documents\\\\MeusProjetos\\\\multiverse-portfolio\\\\portfolio-multiverse\"; npm run dev 2>&1 }; Start-Sleep -Seconds 12; Receive-Job $job; Stop-Job $job; Remove-Job $job)"
     ]
   }
 }
