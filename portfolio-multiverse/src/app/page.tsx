@@ -1,20 +1,47 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { useTheme } from "@/app/context/ThemeContext";
+import { useKonamiCode } from "@/app/hooks/useKonamiCode";
 
+// ── Dynamic imports — browser-only or heavy components ────────────────────
+const ParticleField = dynamic(
+  () => import("@/app/components/effects/ParticleField").then((m) => ({ default: m.ParticleField })),
+  { ssr: false }
+);
+const ScanLines = dynamic(
+  () => import("@/app/components/effects/ScanLines").then((m) => ({ default: m.ScanLines })),
+  { ssr: false }
+);
+const CRTEffect = dynamic(
+  () => import("@/app/components/effects/CRTEffect").then((m) => ({ default: m.CRTEffect })),
+  { ssr: false }
+);
+const FilmGrain = dynamic(
+  () => import("@/app/components/effects/FilmGrain").then((m) => ({ default: m.FilmGrain })),
+  { ssr: false }
+);
+const CustomCursor = dynamic(
+  () => import("@/app/components/ui/CustomCursor").then((m) => ({ default: m.CustomCursor })),
+  { ssr: false }
+);
+const LoadingScreen = dynamic(
+  () => import("@/app/components/ui/LoadingScreen").then((m) => ({ default: m.LoadingScreen })),
+  { ssr: false }
+);
+const FloatingNav = dynamic(
+  () => import("@/app/components/ui/FloatingNav").then((m) => ({ default: m.FloatingNav })),
+  { ssr: false }
+);
+
+// ── Static imports ────────────────────────────────────────────────────────
 import { ThemeTransition } from "@/app/components/ui/ThemeTransition";
 import { ThemeIndicator } from "@/app/components/ui/ThemeIndicator";
 import { AchievementToast } from "@/app/components/ui/AchievementToast";
-import { CustomCursor } from "@/app/components/ui/CustomCursor";
-
+import { ThemeSelector } from "@/app/components/ui/ThemeSelector";
 import { Navbar } from "@/app/components/layout/Navbar";
-
-import { ParticleField } from "@/app/components/effects/ParticleField";
-import { ScanLines } from "@/app/components/effects/ScanLines";
-import { CRTEffect } from "@/app/components/effects/CRTEffect";
-import { FilmGrain } from "@/app/components/effects/FilmGrain";
-
+import { Footer } from "@/app/components/layout/Footer";
 import { Hero } from "@/app/components/sections/Hero";
 import { About } from "@/app/components/sections/About";
 import { Stack } from "@/app/components/sections/Stack";
@@ -22,75 +49,65 @@ import { Projects } from "@/app/components/sections/Projects";
 import { Timeline } from "@/app/components/sections/TimeLine";
 import { Contact } from "@/app/components/sections/Contact";
 
-const KONAMI = [
-  "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
-  "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
-  "b", "a",
-];
-
+// ── Constants ─────────────────────────────────────────────────────────────
 const ALL_THEMES_ACHIEVEMENT = "Multiverse Explorer — você visitou todos os universos!";
 const KONAMI_ACHIEVEMENT = "↑↑↓↓←→←→BA — você conhece os clássicos!";
 
+// ── Page ──────────────────────────────────────────────────────────────────
 export default function Home() {
   const { visitedThemes } = useTheme();
   const [achievement, setAchievement] = useState<string | null>(null);
-  const [konamiDone, setKonamiDone] = useState(false);
-  const [allThemesDone, setAllThemesDone] = useState(false);
-  const konamiRef = { current: 0 };
+  const allThemesDone = useRef(false);
+  const konamiDone = useRef(false);
 
   const showAchievement = useCallback((msg: string) => {
     setAchievement(null);
-    // Slight delay so AnimatePresence re-mounts for same message
     requestAnimationFrame(() => setAchievement(msg));
   }, []);
 
-  // All themes achievement
+  // All-themes achievement
   useEffect(() => {
-    if (!allThemesDone && visitedThemes.size >= 5) {
-      setAllThemesDone(true);
+    if (!allThemesDone.current && visitedThemes.size >= 5) {
+      allThemesDone.current = true;
       showAchievement(ALL_THEMES_ACHIEVEMENT);
     }
-  }, [visitedThemes, allThemesDone, showAchievement]);
+  }, [visitedThemes, showAchievement]);
 
-  // Konami code
-  useEffect(() => {
-    if (konamiDone) return;
-    let idx = 0;
-
-    function onKey(e: KeyboardEvent) {
-      if (e.key === KONAMI[idx]) {
-        idx++;
-        if (idx === KONAMI.length) {
-          setKonamiDone(true);
-          showAchievement(KONAMI_ACHIEVEMENT);
-          idx = 0;
-        }
-      } else {
-        idx = e.key === KONAMI[0] ? 1 : 0;
-      }
+  // Konami code via isolated hook
+  useKonamiCode(() => {
+    if (!konamiDone.current) {
+      konamiDone.current = true;
+      showAchievement(KONAMI_ACHIEVEMENT);
     }
-
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [konamiDone, showAchievement]);
+  });
 
   return (
     <>
-      {/* Global effects */}
-      <ThemeTransition />
-      <CustomCursor />
+      {/* Loading screen (first visit only) */}
+      <LoadingScreen />
+
+      {/* Visual effects */}
       <ParticleField />
       <ScanLines />
       <CRTEffect />
       <FilmGrain />
 
-      {/* UI overlays */}
+      {/* Theme */}
+      <ThemeTransition />
+
+      {/* Cursor */}
+      <CustomCursor />
+
+      {/* Overlays */}
       <ThemeIndicator />
+      <ThemeSelector />
       <AchievementToast message={achievement} onDismiss={() => setAchievement(null)} />
 
-      {/* Layout */}
+      {/* Navigation */}
       <Navbar />
+      <FloatingNav />
 
+      {/* Main content */}
       <main className="pt-14">
         <Hero />
         <section id="sobre"><About /></section>
@@ -98,6 +115,7 @@ export default function Home() {
         <section id="projetos"><Projects /></section>
         <section id="trajetoria"><Timeline /></section>
         <section id="contato"><Contact /></section>
+        <Footer />
       </main>
     </>
   );
