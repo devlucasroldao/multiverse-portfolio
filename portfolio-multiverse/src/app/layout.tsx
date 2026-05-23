@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { ThemeProvider } from "@/context/ThemeContext";
+import { ThemeProvider } from "@/app/context/ThemeContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
