@@ -44,7 +44,7 @@ const cardContainer = {
 
 const cardItem = {
   hidden:  { opacity: 0, scale: 0.93 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.35, ease: "easeOut" } },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.35, ease: "easeOut" as const } },
 };
 
 export function Stack() {

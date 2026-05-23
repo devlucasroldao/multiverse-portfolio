@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 import { useTheme } from "@/app/context/ThemeContext";
 
-export function SoundToggle() {
+interface SoundToggleProps {
+  className?: string;
+}
+
+export function SoundToggle({ className }: SoundToggleProps) {
   const { isMuted, toggleMute } = useTheme();
 
   return (
@@ -14,7 +18,10 @@ export function SoundToggle() {
       whileTap={{ scale: 0.9 }}
       title={isMuted ? "Ativar som" : "Desativar som"}
       aria-label={isMuted ? "Ativar som" : "Desativar som"}
-      className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center text-text-muted hover:text-primary hover:border-primary transition-colors duration-200 cursor-pointer"
+      className={
+        className ??
+        "fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center text-text-muted hover:text-primary hover:border-primary transition-colors duration-200 cursor-pointer"
+      }
     >
       <motion.span
         key={String(isMuted)}

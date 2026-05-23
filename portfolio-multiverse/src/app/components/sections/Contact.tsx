@@ -117,6 +117,14 @@ export function Contact() {
         >
           {EASTER_EGGS[theme]}
         </motion.p>
+
+        {/* Hidden selectable easter egg */}
+        <p
+          className="text-xs font-mono select-all"
+          style={{ color: "transparent", userSelect: "text" }}
+        >
+          Você encontrou o easter egg. Me manda uma mensagem falando qual tema preferiu 😄
+        </p>
       </div>
     </section>
   );
