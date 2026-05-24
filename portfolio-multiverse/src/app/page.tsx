@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useTheme } from "@/app/context/ThemeContext";
 import { useKonamiCode } from "@/app/hooks/useKonamiCode";
 
-// ── Dynamic imports — browser-only or heavy components ────────────────────
+// ── Dynamic imports — browser-only or heavy ───────────────────────────────
 const ParticleField = dynamic(
   () => import("@/app/components/effects/ParticleField").then((m) => ({ default: m.ParticleField })),
   { ssr: false }
@@ -22,12 +22,16 @@ const FilmGrain = dynamic(
   () => import("@/app/components/effects/FilmGrain").then((m) => ({ default: m.FilmGrain })),
   { ssr: false }
 );
+const PixelTransition = dynamic(
+  () => import("@/app/components/effects/PixelTransition").then((m) => ({ default: m.PixelTransition })),
+  { ssr: false }
+);
 const CustomCursor = dynamic(
   () => import("@/app/components/ui/CustomCursor").then((m) => ({ default: m.CustomCursor })),
   { ssr: false }
 );
-const LoadingScreen = dynamic(
-  () => import("@/app/components/ui/LoadingScreen").then((m) => ({ default: m.LoadingScreen })),
+const IntroScreen = dynamic(
+  () => import("@/app/components/ui/IntroScreen").then((m) => ({ default: m.IntroScreen })),
   { ssr: false }
 );
 const FloatingNav = dynamic(
@@ -40,6 +44,7 @@ import { ThemeTransition } from "@/app/components/ui/ThemeTransition";
 import { ThemeIndicator } from "@/app/components/ui/ThemeIndicator";
 import { AchievementToast } from "@/app/components/ui/AchievementToast";
 import { ThemeSelector } from "@/app/components/ui/ThemeSelector";
+import { ProgressBar } from "@/app/components/ui/ProgressBar";
 import { Navbar } from "@/app/components/layout/Navbar";
 import { Footer } from "@/app/components/layout/Footer";
 import { Hero } from "@/app/components/sections/Hero";
@@ -51,14 +56,14 @@ import { Contact } from "@/app/components/sections/Contact";
 
 // ── Constants ─────────────────────────────────────────────────────────────
 const ALL_THEMES_ACHIEVEMENT = "Multiverse Explorer — você visitou todos os universos!";
-const KONAMI_ACHIEVEMENT = "↑↑↓↓←→←→BA — você conhece os clássicos!";
+const KONAMI_ACHIEVEMENT     = "↑↑↓↓←→←→BA — você conhece os clássicos!";
 
 // ── Page ──────────────────────────────────────────────────────────────────
 export default function Home() {
   const { visitedThemes } = useTheme();
   const [achievement, setAchievement] = useState<string | null>(null);
   const allThemesDone = useRef(false);
-  const konamiDone = useRef(false);
+  const konamiDone    = useRef(false);
 
   const showAchievement = useCallback((msg: string) => {
     setAchievement(null);
@@ -73,7 +78,7 @@ export default function Home() {
     }
   }, [visitedThemes, showAchievement]);
 
-  // Konami code via isolated hook
+  // Konami code
   useKonamiCode(() => {
     if (!konamiDone.current) {
       konamiDone.current = true;
@@ -83,14 +88,15 @@ export default function Home() {
 
   return (
     <>
-      {/* Loading screen (first visit only) */}
-      <LoadingScreen />
+      {/* Intro screen — full cinematic on first visit, brief flash on return */}
+      <IntroScreen />
 
       {/* Visual effects */}
       <ParticleField />
       <ScanLines />
       <CRTEffect />
       <FilmGrain />
+      <PixelTransition />
 
       {/* Theme */}
       <ThemeTransition />
@@ -98,7 +104,8 @@ export default function Home() {
       {/* Cursor */}
       <CustomCursor />
 
-      {/* Overlays */}
+      {/* Global UI overlays */}
+      <ProgressBar />
       <ThemeIndicator />
       <ThemeSelector />
       <AchievementToast message={achievement} onDismiss={() => setAchievement(null)} />

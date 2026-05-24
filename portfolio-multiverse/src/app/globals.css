@@ -380,3 +380,44 @@ body {
   outline: 2px solid var(--color-primary);
   outline-offset: 3px;
 }
+
+/* ── SCROLLBAR GLOBAL ──────────────────────────────────────────────────── */
+html {
+  scrollbar-color: var(--color-primary) var(--color-surface);
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary);
+}
+
+/* ── REDUCED MOTION ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Keep decorative only — interactive transitions still work */
+  .film-grain::after,
+  .scanlines-overlay::before {
+    display: none;
+  }
+}
+
+/* ── PROFILE PHOTO BORDER (conic fallback via transform) ────────────────── */
+@keyframes spin-border {
+  to { transform: rotate(360deg); }
+}
