@@ -575,3 +575,89 @@ html {
 @keyframes spin-border {
   to { transform: rotate(360deg); }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PREMIUM UTILITIES — layout, hierarquia visual, atmosfera
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Rótulo de seção — tag pequena acima de headings */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  opacity: 0.75;
+}
+
+/* Barra de skill com gradiente + brilho */
+.skill-bar-gradient {
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  box-shadow: 0 0 6px var(--color-primary-glow);
+  border-radius: 9999px;
+}
+
+/* Dot brilhante na linha da timeline */
+.timeline-dot {
+  background: var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary-glow), 0 0 20px var(--color-primary-glow);
+}
+
+/* Separador horizontal suave */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
+/* Glow atmosférico — lado direito */
+.bg-glow-right {
+  background: radial-gradient(ellipse 55% 55% at 85% 35%, var(--color-primary-glow), transparent 70%);
+  opacity: 0.13;
+}
+
+/* Glow atmosférico — lado esquerdo */
+.bg-glow-left {
+  background: radial-gradient(ellipse 55% 55% at 15% 60%, var(--color-primary-glow), transparent 70%);
+  opacity: 0.13;
+}
+
+/* Glow atmosférico — topo */
+.bg-glow-top {
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, var(--color-primary-glow), transparent 70%);
+  opacity: 0.12;
+}
+
+/* Card com hover premium */
+.card-glow {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.25s ease;
+}
+.card-glow:hover {
+  box-shadow: var(--shadow-glow);
+  border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  transform: translateY(-2px);
+}
+
+/* Texto com gradiente primário */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Container centralizado padrão do projeto */
+.container-site {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .container-site {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}

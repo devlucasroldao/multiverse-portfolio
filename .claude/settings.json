@@ -20,10 +20,12 @@
       "Read(//mnt/user-data/uploads/**)",
       "Bash(find / -name \"IMG_6881*\" 2>/dev/null | head -5)",
       "Read(//c//**)",
-      "Bash(mkdir -p \"c:/Users/lucas/Documents/MeusProjetos/multiverse-portfolio/portfolio-multiverse/public/images\" && echo \"OK\")"
+      "Bash(mkdir -p \"c:/Users/lucas/Documents/MeusProjetos/multiverse-portfolio/portfolio-multiverse/public/images\" && echo \"OK\")",
+      "Bash(node -e \"const icons = require\\('lucide-react'\\); const names = Object.keys\\(icons\\).filter\\(k => k.toLowerCase\\(\\).includes\\('camera'\\) || k.toLowerCase\\(\\).includes\\('image'\\) || k.toLowerCase\\(\\).includes\\('photo'\\) || k.toLowerCase\\(\\).includes\\('circle'\\)\\); console.log\\(names.slice\\(0,20\\).join\\(', '\\)\\)\")"
     ],
     "additionalDirectories": [
-      "c:\\Users\\lucas\\Documents\\MeusProjetos\\multiverse-portfolio\\portfolio-multiverse\\public"
+      "c:\\Users\\lucas\\Documents\\MeusProjetos\\multiverse-portfolio\\portfolio-multiverse\\public",
+      "c:\\Users\\lucas\\.claude\\projects\\c--Users-lucas-Documents-MeusProjetos-multiverse-portfolio\\memory"
     ]
   }
 }

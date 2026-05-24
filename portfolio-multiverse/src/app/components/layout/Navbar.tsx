@@ -7,7 +7,7 @@ import { useTheme, type ThemeId } from "@/app/context/ThemeContext";
 import { ScrollProgress } from "@/app/components/ui/ScrollProgress";
 import { SoundToggle } from "@/app/components/ui/SoundToggle";
 
-const NAV_LINKS: { label: Record<ThemeId, string>; href: string }[] = [
+const NAV_LINKS: { label: Record<ThemeId, string>; href: string; id: string }[] = [
   {
     label: {
       default:   "Sobre",
@@ -20,6 +20,7 @@ const NAV_LINKS: { label: Record<ThemeId, string>; href: string }[] = [
       rpg:       "HERÓI",
     },
     href: "#sobre",
+    id:   "sobre",
   },
   {
     label: {
@@ -33,6 +34,7 @@ const NAV_LINKS: { label: Record<ThemeId, string>; href: string }[] = [
       rpg:       "HABILIDADES",
     },
     href: "#stack",
+    id:   "stack",
   },
   {
     label: {
@@ -46,6 +48,7 @@ const NAV_LINKS: { label: Record<ThemeId, string>; href: string }[] = [
       rpg:       "MISSÕES",
     },
     href: "#projetos",
+    id:   "projetos",
   },
   {
     label: {
@@ -59,6 +62,7 @@ const NAV_LINKS: { label: Record<ThemeId, string>; href: string }[] = [
       rpg:       "LORE",
     },
     href: "#trajetoria",
+    id:   "trajetoria",
   },
   {
     label: {
@@ -72,6 +76,7 @@ const NAV_LINKS: { label: Record<ThemeId, string>; href: string }[] = [
       rpg:       "ALIANÇA",
     },
     href: "#contato",
+    id:   "contato",
   },
 ];
 
@@ -88,16 +93,39 @@ const LOGO: Record<ThemeId, string> = {
 
 export function Navbar() {
   const { theme } = useTheme();
-  const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [open, setOpen]               = useState(false);
+  const [mounted, setMounted]         = useState(false);
+  const [scrolled, setScrolled]       = useState(false);
+  const [activeSection, setActive]    = useState("");
 
+  /* scroll detection */
   useEffect(() => {
     setMounted(true);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  /* active section via IntersectionObserver */
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    NAV_LINKS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActive(id); },
+        { threshold: 0.25, rootMargin: "-80px 0px -50% 0px" }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   function scrollTo(href: string) {
     setOpen(false);
-    const el = document.querySelector(href);
+    const el = document.getElementById(href.replace("#", ""));
     if (el) el.scrollIntoView({ behavior: "smooth" });
   }
 
@@ -105,42 +133,82 @@ export function Navbar() {
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={mounted ? { y: 0, opacity: 1 } : {}}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-md border-b border-border"
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={[
+        "fixed top-0 inset-x-0 z-50 transition-all duration-500",
+        scrolled
+          ? "bg-surface/90 backdrop-blur-xl border-b border-border shadow-theme-sm"
+          : "bg-transparent backdrop-blur-sm border-b border-transparent",
+      ].join(" ")}
     >
-      <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+
         {/* Logo */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="font-mono font-bold text-primary text-sm tracking-tight hover:opacity-80 transition-opacity cursor-pointer"
+          className="font-mono font-bold text-primary text-sm tracking-tight hover:opacity-75 transition-opacity duration-200 cursor-pointer"
         >
           {LOGO[theme]}
         </button>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6">
-          {NAV_LINKS.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => scrollTo(link.href)}
-              className="text-xs font-mono text-text-muted hover:text-primary transition-colors duration-150 cursor-pointer"
-            >
-              {link.label[theme]}
-            </button>
-          ))}
+        <nav className="hidden md:flex items-center gap-1">
+          {NAV_LINKS.map((link) => {
+            const isActive = activeSection === link.id;
+            return (
+              <button
+                key={link.href}
+                onClick={() => scrollTo(link.href)}
+                className={[
+                  "relative px-4 py-2 text-xs font-mono rounded-full transition-colors duration-200 cursor-pointer",
+                  isActive ? "text-primary" : "text-text-muted hover:text-text",
+                ].join(" ")}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 bg-primary/10 border border-primary/20 rounded-full -z-10"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                  />
+                )}
+                {link.label[theme]}
+              </button>
+            );
+          })}
         </nav>
 
         {/* Right side */}
         <div className="flex items-center gap-3">
           <SoundToggle className="relative bottom-auto right-auto w-8 h-8" />
 
-          {/* Hamburger (mobile) */}
           <button
             onClick={() => setOpen((v) => !v)}
             className="md:hidden w-8 h-8 flex items-center justify-center text-text-muted hover:text-primary transition-colors cursor-pointer"
             aria-label="Toggle menu"
           >
-            {open ? <X size={18} /> : <Menu size={18} />}
+            <AnimatePresence mode="wait" initial={false}>
+              {open ? (
+                <motion.span
+                  key="x"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <X size={18} />
+                </motion.span>
+              ) : (
+                <motion.span
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                >
+                  <Menu size={18} />
+                </motion.span>
+              )}
+            </AnimatePresence>
           </button>
         </div>
       </div>
@@ -148,26 +216,35 @@ export function Navbar() {
       {/* Scroll progress bar */}
       <ScrollProgress />
 
-      {/* Mobile drawer */}
+      {/* Mobile fullscreen menu */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden overflow-hidden bg-surface border-t border-border"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.22 }}
+            className="md:hidden fixed inset-0 top-16 z-40 bg-surface/97 backdrop-blur-xl flex flex-col items-center justify-center"
           >
-            <nav className="flex flex-col px-6 py-4 gap-3">
-              {NAV_LINKS.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => scrollTo(link.href)}
-                  className="text-sm font-mono text-text-muted hover:text-primary transition-colors text-left py-1 cursor-pointer"
-                >
-                  {link.label[theme]}
-                </button>
-              ))}
+            <nav className="flex flex-col items-center gap-8">
+              {NAV_LINKS.map((link, i) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <motion.button
+                    key={link.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                    onClick={() => scrollTo(link.href)}
+                    className={[
+                      "text-3xl font-display font-bold transition-colors cursor-pointer",
+                      isActive ? "text-primary" : "text-text-muted hover:text-primary",
+                    ].join(" ")}
+                  >
+                    {link.label[theme]}
+                  </motion.button>
+                );
+              })}
             </nav>
           </motion.div>
         )}

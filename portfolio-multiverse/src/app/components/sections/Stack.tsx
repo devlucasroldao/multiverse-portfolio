@@ -1,11 +1,22 @@
 "use client";
 
 import { useRef, useState, memo, type ReactNode } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useTheme, type ThemeId } from "@/app/context/ThemeContext";
 import { stack, type StackItem } from "@/app/data/stack";
 
 type Category = StackItem["category"] | "all";
+
+const SECTION_LABELS: Record<ThemeId, string> = {
+  default:   "// Tech Stack",
+  retro2000: ">> SKILLS.dat",
+  western:   "— Ferramentas do Ofício —",
+  cyberpunk: "TECH_MATRIX >>",
+  arcade:    "POWER-UPS",
+  oldfilm:   "— Equipamentos —",
+  sketch:    "// Meu Arsenal",
+  rpg:       "⚔ HABILIDADES",
+};
 
 const TITLES: Record<ThemeId, string> = {
   default:   "Tech Stack",
@@ -42,27 +53,42 @@ function levelLabel(level: number): string {
   return "Iniciante";
 }
 
+// ── Skill bar with gradient + glow ────────────────────────────────────────
 function SkillBar({ level, inView }: { level: number; inView: boolean }) {
   return (
-    <div className="h-1 w-full bg-surface-2 rounded-full overflow-hidden">
+    <div className="h-1.5 w-full bg-surface-2 rounded-full overflow-visible relative">
       <motion.div
-        className="h-full rounded-full bg-primary"
+        className="h-full skill-bar-gradient relative"
+        style={{ borderRadius: "9999px" }}
         initial={{ width: 0 }}
         animate={{ width: inView ? `${level}%` : 0 }}
-        transition={{ duration: 0.75, ease: "easeOut", delay: 0.15 }}
-      />
+        transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}
+      >
+        {/* Glow dot at end of bar */}
+        <motion.div
+          className="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full"
+          style={{
+            background: "var(--color-primary)",
+            boxShadow: "0 0 8px var(--color-primary-glow), 0 0 16px var(--color-primary-glow)",
+            marginRight: "-5px",
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: inView ? 1 : 0 }}
+          transition={{ delay: 0.85, duration: 0.3 }}
+        />
+      </motion.div>
     </div>
   );
 }
 
 const cardContainer = {
-  hidden: {},
+  hidden:  {},
   visible: { transition: { staggerChildren: 0.06 } },
 };
 
 const cardItem = {
-  hidden:  { opacity: 0, scale: 0.93 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.35, ease: "easeOut" as const } },
+  hidden:  { opacity: 0, scale: 0.93, y: 10 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" as const } },
 };
 
 interface CardProps {
@@ -76,29 +102,50 @@ const SkillCard = memo(function SkillCard({ s, inView }: CardProps) {
   return (
     <motion.div
       variants={cardItem}
-      whileHover={{ scale: 1.03, boxShadow: "var(--shadow-glow)" }}
+      whileHover={{ y: -3, boxShadow: "var(--shadow-glow)" }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="relative bg-surface border border-border rounded-theme p-5 flex flex-col gap-3 cursor-default"
+      className="relative bg-surface border border-border rounded-theme p-5 flex flex-col gap-3 cursor-default transition-all duration-300 hover:border-primary/30 overflow-hidden group"
     >
-      {/* Tooltip */}
-      <AnimatePresenceInline show={hovered}>
-        <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-text text-background text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap z-10 pointer-events-none">
-          {levelLabel(s.level)}
-          <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-text" />
-        </div>
-      </AnimatePresenceInline>
+      {/* Inner glow overlay on hover */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none rounded-theme"
+        style={{ background: "radial-gradient(circle at 50% 0%, var(--color-primary-glow), transparent 60%)" }}
+      />
 
-      <div className="flex items-center gap-3">
+      {/* Tooltip */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 4 }}
+            transition={{ duration: 0.15 }}
+            className="absolute -top-9 left-1/2 -translate-x-1/2 bg-text text-background text-[10px] font-mono px-2.5 py-1 rounded whitespace-nowrap z-20 pointer-events-none"
+          >
+            {levelLabel(s.level)}
+            <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-text" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Icon + name */}
+      <div className="flex items-center gap-3 relative z-10">
         <span className="text-2xl leading-none w-8 text-center shrink-0">{s.icon}</span>
-        <span className="font-mono text-sm text-text">{s.name}</span>
+        <span className="font-mono text-sm text-text font-medium">{s.name}</span>
       </div>
-      <SkillBar level={s.level} inView={inView} />
-      <div className="flex justify-between items-center">
-        <span className="text-[11px] text-text-dim font-mono opacity-60">
+
+      {/* Skill bar */}
+      <div className="relative z-10">
+        <SkillBar level={s.level} inView={inView} />
+      </div>
+
+      {/* Level label + % */}
+      <div className="flex justify-between items-center relative z-10">
+        <span className="text-[11px] text-text-dim font-mono">
           {levelLabel(s.level)}
         </span>
-        <span className="text-[11px] text-text-dim text-right font-mono">
+        <span className="text-[11px] text-primary font-mono font-medium">
           {s.level}%
         </span>
       </div>
@@ -106,69 +153,63 @@ const SkillCard = memo(function SkillCard({ s, inView }: CardProps) {
   );
 });
 
-// Lightweight inline AnimatePresence wrapper to avoid importing AnimatePresence at top level
-function AnimatePresenceInline({
-  show,
-  children,
-}: {
-  show: boolean;
-  children: ReactNode;
-}) {
-  if (!show) return null;
-  return <>{children}</>;
-}
-
+// ── Component ─────────────────────────────────────────────────────────────
 export function Stack() {
   const { theme } = useTheme();
   const [active, setActive] = useState<Category>("all");
-  const ref = useRef<HTMLElement>(null);
+  const ref    = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
-  const filtered =
-    active === "all" ? stack : stack.filter((s) => s.category === active);
-
+  const filtered   = active === "all" ? stack : stack.filter((s) => s.category === active);
   const categories = (["frontend", "backend", "design", "devops", "marketing"] as const).filter(
     (cat) => active === "all" || cat === active
   );
 
   return (
-    <section ref={ref} className="py-24 px-6 bg-background">
-      <div className="max-w-4xl mx-auto">
-        {/* Title + count */}
-        <div className="flex flex-wrap items-baseline gap-4 mb-10">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="text-3xl sm:text-4xl font-display font-bold text-text"
-          >
-            {TITLES[theme]}
-          </motion.h2>
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-sm font-mono text-text-muted"
-          >
-            {stack.length} tecnologias dominadas
-          </motion.span>
-        </div>
+    <section ref={ref} className="py-28 px-6 bg-background relative overflow-hidden">
+      {/* Atmospheric glow */}
+      <div className="absolute inset-0 pointer-events-none bg-glow-left" aria-hidden />
+
+      <div className="max-w-6xl mx-auto relative">
+
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+          className="mb-12"
+        >
+          <span className="section-label block mb-4">{SECTION_LABELS[theme]}</span>
+          <div className="flex flex-wrap items-baseline gap-4">
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-text">
+              {TITLES[theme]}
+            </h2>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-sm font-mono text-text-muted"
+            >
+              {stack.length} tecnologias
+            </motion.span>
+          </div>
+        </motion.div>
 
         {/* Filter buttons */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex flex-wrap gap-2 mb-10"
+          transition={{ duration: 0.5, delay: 0.12 }}
+          className="flex flex-wrap gap-2 mb-12"
         >
           {CATEGORIES.map(({ value, label }) => (
             <button
               key={value}
               onClick={() => setActive(value)}
               className={[
-                "px-4 py-1.5 rounded-full text-sm font-mono border transition-colors duration-200 cursor-pointer",
+                "px-4 py-1.5 rounded-full text-sm font-mono border transition-all duration-200 cursor-pointer",
                 active === value
-                  ? "bg-primary text-background border-primary"
+                  ? "bg-primary text-background border-primary shadow-theme-sm"
                   : "bg-surface text-text-muted border-border hover:border-primary hover:text-primary",
               ].join(" ")}
             >
@@ -179,7 +220,7 @@ export function Stack() {
 
         {/* Cards — grouped when viewing all, flat otherwise */}
         {active === "all" ? (
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-12">
             {categories.map((cat) => {
               const items = stack.filter((s) => s.category === cat);
               return (
@@ -189,11 +230,15 @@ export function Stack() {
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.4 }}
                 >
-                  <h3 className="text-xs font-mono text-text-dim uppercase tracking-widest mb-4 flex items-center gap-2">
-                    <span className="flex-1 h-px bg-border" />
-                    {CAT_LABELS[cat]}
-                    <span className="flex-1 h-px bg-border" />
-                  </h3>
+                  {/* Category divider */}
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="h-px flex-1 bg-border" />
+                    <h3 className="text-[11px] font-mono text-text-dim uppercase tracking-widest px-2">
+                      {CAT_LABELS[cat]}
+                    </h3>
+                    <div className="h-px flex-1 bg-border" />
+                  </div>
+
                   <motion.div
                     variants={cardContainer}
                     initial="hidden"

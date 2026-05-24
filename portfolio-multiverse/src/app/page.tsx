@@ -115,7 +115,7 @@ export default function Home() {
       <FloatingNav />
 
       {/* Main content */}
-      <main className="pt-14">
+      <main className="pt-16">
         <Hero />
         <section id="sobre"><About /></section>
         <section id="stack"><Stack /></section>
