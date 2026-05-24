@@ -13,6 +13,9 @@ const CURSOR_CONFIG: Record<
   western:   { shape: "crosshair", color: "var(--color-primary)", size: 16 },
   cyberpunk: { shape: "square",    color: "#00FFE5",              size: 12 },
   arcade:    { shape: "pixel",     color: "var(--color-primary)", size: 10 },
+  oldfilm:   { shape: "circle",    color: "var(--color-primary)", size: 12 },
+  sketch:    { shape: "circle",    color: "var(--color-primary)", size: 12 },
+  rpg:       { shape: "crosshair", color: "var(--color-primary)", size: 14 },
 };
 
 export function CustomCursor() {

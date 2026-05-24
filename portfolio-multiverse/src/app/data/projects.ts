@@ -7,50 +7,63 @@ export interface Project {
   github?: string;
   featured: boolean;
   color: string;
+  status?: string;
 }
 
 export const projects: Project[] = [
   {
-    id: "saas-dashboard",
-    title: "SaaS Analytics Dashboard",
+    id: "lu-perfumes",
+    title: "Lú Perfumes & Presentes",
     description:
-      "Plataforma de analytics com visualizações em tempo real, segmentação de usuários e relatórios customizáveis para startups B2B.",
-    tags: ["Next.js", "TypeScript", "Recharts", "Prisma", "PostgreSQL"],
-    url: "https://dashboard.exemplo.com",
-    github: "https://github.com/seunome/saas-dashboard",
+      "Catálogo online onde o usuário explora produtos, monta seu kit personalizado e tem uma experiência de compra única. Foco em UI/UX e responsividade.",
+    tags: ["HTML5", "CSS3", "JavaScript"],
+    github: "https://github.com/devlucasroldao/lu-perfumes-v2",
     featured: true,
-    color: "#6366F1",
+    color: "#52B788",
+    status: "Em desenvolvimento",
   },
   {
-    id: "ecommerce-growth",
-    title: "E-commerce Growth Engine",
+    id: "conecte-telecom",
+    title: "Conecte Telecom",
     description:
-      "Sistema de automação de marketing para e-commerces: recuperação de carrinho, e-mails segmentados e A/B testing integrado.",
-    tags: ["React", "Node.js", "SendGrid", "Redis", "AWS"],
-    url: "https://growth.exemplo.com",
-    github: "https://github.com/seunome/growth-engine",
+      "Landing page profissional para provedor de internet fibra óptica. Design limpo, foco em conversão e área do cliente em desenvolvimento.",
+    tags: ["Next.js", "TailwindCSS", "Vercel"],
+    github: "https://github.com/devlucasroldao/conecte-landing",
     featured: true,
-    color: "#22D3EE",
+    color: "#415A77",
+    status: "Em desenvolvimento",
   },
   {
-    id: "design-system",
-    title: "Design System Open Source",
+    id: "netdesk",
+    title: "NetDesk",
     description:
-      "Biblioteca de componentes React acessível com Storybook, temas dinâmicos e documentação interativa. +500 stars no GitHub.",
-    tags: ["React", "Storybook", "Radix UI", "CSS Variables", "WCAG"],
-    github: "https://github.com/seunome/design-system",
-    featured: false,
-    color: "#F472B6",
+      "Sistema de gerenciamento para provedores de internet. Controle de clientes, chamados e operações internas em uma interface moderna.",
+    tags: ["JavaScript", "SQL", "CSS3"],
+    github: "https://github.com/devlucasroldao/netdesk",
+    featured: true,
+    color: "#778DA9",
+    status: "Em desenvolvimento",
   },
   {
-    id: "ai-content",
-    title: "AI Content Studio",
+    id: "multiverse-portfolio",
+    title: "Portfolio Multiverso",
     description:
-      "Ferramenta de criação de conteúdo com IA: geração de posts, scripts de vídeo e copy de ads otimizados por verticais.",
-    tags: ["Python", "FastAPI", "OpenAI", "React", "TailwindCSS"],
-    url: "https://studio.exemplo.com",
-    github: "https://github.com/seunome/ai-content",
+      "O próprio portfólio que você está navegando agora. 8 universos visuais completos, transições cinematográficas e easter eggs escondidos.",
+    tags: ["Next.js", "React", "TailwindCSS", "Framer Motion"],
+    github: "https://github.com/devlucasroldao/multiverse-portfolio",
+    featured: true,
+    color: "#52B788",
+    status: "Em desenvolvimento",
+  },
+  {
+    id: "site-time-futebol",
+    title: "Landing Page — Time de Futebol",
+    description:
+      "Interface web responsiva construída 100% do zero, sem frameworks. CSS manual intenso para garantir fidelidade visual e boa experiência.",
+    tags: ["HTML5", "CSS3", "JavaScript"],
+    github: "https://github.com/devlucasroldao/site-time-da-vila",
     featured: false,
-    color: "#D4943A",
+    color: "#2d6a4f",
+    status: "Concluído",
   },
 ];

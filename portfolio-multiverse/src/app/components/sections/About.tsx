@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useTheme, type ThemeId } from "@/app/context/ThemeContext";
 import { TextReveal } from "@/app/components/effects/TextReveal";
@@ -12,19 +13,23 @@ const TITLES: Record<ThemeId, string> = {
   western:   "O Pistoleiro",
   cyberpunk: "PROFILE_DATA",
   arcade:    "PLAYER INFO",
+  oldfilm:   "O Diretor",
+  sketch:    "Quem Sou Eu?",
+  rpg:       "FICHA DO HERÓI",
 };
 
 const STATS = [
-  { value: 7,  suffix: "+", label: "anos de experiência" },
-  { value: 50, suffix: "+", label: "projetos entregues"   },
-  { value: 3,  suffix: "",  label: "áreas de atuação"     },
+  { value: 1,  suffix: " ano",  label: "de estudos intensos"        },
+  { value: 5,  suffix: "+",     label: "projetos em desenvolvimento" },
+  { value: 7,  suffix: "+",     label: "linguagens e ferramentas"    },
+  { value: "∞", suffix: "",     label: "criatividade disponível"     },
 ];
 
 const AREAS = [
-  "Desenvolvimento Full Stack",
-  "Design UI/UX",
-  "Growth Marketing",
-  "Automações & Integrações",
+  "Desenvolvimento Front-end",
+  "UI/UX — Design & Experiência",
+  "Edição de Vídeo & Roteiro",
+  "Automações com IA",
 ];
 
 const container = {
@@ -39,6 +44,8 @@ const item = {
 
 // ── Animated profile photo ────────────────────────────────────────────────
 function ProfilePhoto() {
+  const [imgError, setImgError] = useState(false);
+
   return (
     <div className="relative w-36 h-36 mx-auto md:mx-0 shrink-0" aria-hidden>
       {/* Rotating conic-gradient border */}
@@ -51,9 +58,22 @@ function ProfilePhoto() {
             "conic-gradient(from 0deg, var(--color-primary) 0deg, var(--color-secondary) 120deg, var(--color-accent) 240deg, var(--color-primary) 360deg)",
         }}
       />
-      {/* Inner static circle */}
-      <div className="absolute inset-[3px] rounded-full bg-background flex items-center justify-center z-10">
-        <span className="font-display font-bold text-3xl text-primary select-none">LR</span>
+      {/* Inner circle — photo or initials fallback */}
+      <div className="absolute inset-0.75 rounded-full bg-background overflow-hidden z-10">
+        {!imgError ? (
+          <Image
+            src="/images/lucas-roldao.jpg"
+            alt="Lucas Roldão"
+            fill
+            priority
+            className="object-cover object-top"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <span className="font-display font-bold text-3xl text-primary select-none">LR</span>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -85,14 +105,21 @@ export function About() {
             </motion.div>
 
             <motion.p variants={item} className="text-text-muted leading-relaxed">
-              Sou um profissional híbrido que une código, design e estratégia de
-              crescimento. Não me contento em entregar um site bonito — quero que
-              cada pixel e cada linha de código gere resultado real para o negócio.
+              Sou um maluco por tudo. Quando gosto de algo, coloco na cabeça e vou em frente — sem
+              freio, sem desculpa. Teatro, humor, tecnologia, edição de vídeo, roteiro, código...
+              tudo serve pra algo, tudo é experiência. Tenho 22 anos, nasci no último dia de fevereiro
+              de 2004, e já fiz de tudo um pouco nessa vida.
             </motion.p>
             <motion.p variants={item} className="text-text-muted leading-relaxed">
-              Trabalho desde a arquitetura da solução até a análise de métricas
-              pós-lançamento. Acredito que o melhor produto é aquele que as pessoas
-              realmente usam — e que cresce de forma sustentável.
+              Entrei na faculdade de ADS achando que era só fazer as aulas — engano meu. Aprendi
+              rápido que o jogo é outro: estudar por fora, entender o que está em alta, usar isso a
+              favor. No início do ano nem sabia usar o GitHub direito. Hoje estou colocando um site no
+              ar pra uma empresa de verdade. Isso é evolução, e eu não pretendo parar.
+            </motion.p>
+            <motion.p variants={item} className="text-text-muted leading-relaxed">
+              O que eu quero construir? Qualquer coisa que seja bonita, funcional e que resolva um
+              problema de verdade. Não tem sensação melhor do que ver alguém sorrir porque o que você
+              criou aliviou o estresse do dia dele — ainda mais quando o projeto tá lindo pra caramba.
             </motion.p>
 
             <motion.ul variants={item} className="flex flex-col gap-2.5 mt-1">
@@ -108,7 +135,7 @@ export function About() {
             </motion.ul>
           </div>
 
-          {/* Right: stat cards with CountUp */}
+          {/* Right: stat cards */}
           <div className="flex flex-col gap-4">
             {STATS.map((stat) => (
               <motion.div
@@ -117,7 +144,10 @@ export function About() {
                 className="bg-background border border-border rounded-theme p-6 flex flex-col gap-1"
               >
                 <span className="text-4xl font-display font-bold text-primary">
-                  <CountUp end={stat.value} suffix={stat.suffix} />
+                  {typeof stat.value === "number"
+                    ? <CountUp end={stat.value} suffix={stat.suffix} />
+                    : <>{stat.value}{stat.suffix}</>
+                  }
                 </span>
                 <span className="text-sm text-text-muted">{stat.label}</span>
               </motion.div>

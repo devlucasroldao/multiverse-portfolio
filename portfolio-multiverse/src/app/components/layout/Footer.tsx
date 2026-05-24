@@ -4,16 +4,19 @@ import { Link2, GitBranch } from "lucide-react";
 import { useTheme, type ThemeId } from "@/app/context/ThemeContext";
 
 const COPYRIGHT: Record<ThemeId, string> = {
-  default:   "Feito com ☕ e muitas linhas de código — [Nome] © 2025",
-  retro2000: "Feito com FrontPage 2000 e muito amor 💾",
-  western:   "Forjado à mão no deserto digital 🤠",
-  cyberpunk: "COMPILED_BY: [NOME] // BUILD: 2025 // STATUS: ONLINE",
-  arcade:    "MADE WITH ♥ AND 99 LIVES // © 2025",
+  default:   "Feito com ☕ e muitas linhas de código — Lucas Roldão © 2025",
+  retro2000: "Feito com FrontPage 2000 e saudade 💾 — Lucas Roldão © 2025",
+  western:   "Forjado à mão no sul do Brasil 🤠 — Lucas Roldão © 2025",
+  cyberpunk: "COMPILED_BY: LUCAS_ROLDAO // BUILD: 2025 // STATUS: ONLINE",
+  arcade:    "MADE WITH ♥ AND ∞ LIVES // LUCAS ROLDÃO © 2025",
+  oldfilm:   "Uma produção Lucas Roldão — Arroio do Sal, RS — 2025",
+  sketch:    "Rabiscado com carinho por Lucas Roldão ✏️ — 2025",
+  rpg:       "⚔️ Que sua jornada seja épica — Lucas Roldão, Nível 1 · 2025",
 };
 
 const SOCIALS = [
-  { label: "LinkedIn", href: "https://linkedin.com/in/seunome", Icon: Link2 },
-  { label: "GitHub",   href: "https://github.com/seunome",      Icon: GitBranch },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/devlucasroldao/", Icon: Link2 },
+  { label: "GitHub",   href: "https://github.com/devlucasroldao",           Icon: GitBranch },
 ];
 
 export function Footer() {

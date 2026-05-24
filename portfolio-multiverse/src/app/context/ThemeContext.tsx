@@ -16,7 +16,10 @@ export type ThemeId =
   | "retro2000"
   | "western"
   | "cyberpunk"
-  | "arcade";
+  | "arcade"
+  | "oldfilm"
+  | "sketch"
+  | "rpg";
 
 export interface ThemeConfig {
   id: ThemeId;
@@ -79,6 +82,29 @@ export const THEMES: ThemeConfig[] = [
     description: "Insert coin to continue",
     soundFile: "/sounds/blip-arcade.mp3",
   },
+  {
+    id: "oldfilm",
+    name: "Filme Antigo",
+    emoji: "🎬",
+    description: "Preto e branco. Grão. Nostalgia.",
+    soundFile: "/sounds/click-western.mp3",
+    bodyClass: "film-grain oldfilm-effect",
+  },
+  {
+    id: "sketch",
+    name: "Rabisco",
+    emoji: "✏️",
+    description: "Como se fosse desenhado à mão.",
+    soundFile: "/sounds/blip-arcade.mp3",
+  },
+  {
+    id: "rpg",
+    name: "RPG Medieval",
+    emoji: "⚔️",
+    description: "Desperte o aventureiro interior.",
+    soundFile: "/sounds/click-western.mp3",
+    bodyClass: "rpg-particles",
+  },
 ];
 
 const THEME_ORDER: ThemeId[] = THEMES.map((t) => t.id);
@@ -130,9 +156,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const html = document.documentElement;
     const body = document.body;
 
-    // Remove classes de efeito de temas anteriores
+    // Remove classes de efeito de temas anteriores (suporta múltiplas classes separadas por espaço)
     THEMES.forEach((t) => {
-      if (t.bodyClass) body.classList.remove(t.bodyClass);
+      if (t.bodyClass) t.bodyClass.split(" ").forEach((c) => body.classList.remove(c));
     });
 
     // Aplica o novo tema
@@ -140,7 +166,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     html.classList.add("theme-transition");
 
     const cfg = THEMES.find((t) => t.id === nextTheme);
-    if (cfg?.bodyClass) body.classList.add(cfg.bodyClass);
+    if (cfg?.bodyClass) cfg.bodyClass.split(" ").forEach((c) => body.classList.add(c));
 
     // Remove classe de transição após animação
     setTimeout(() => html.classList.remove("theme-transition"), 600);

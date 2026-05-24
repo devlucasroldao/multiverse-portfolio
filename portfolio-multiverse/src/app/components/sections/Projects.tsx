@@ -12,6 +12,9 @@ const TITLES: Record<ThemeId, string> = {
   western:   "Missões Concluídas",
   cyberpunk: "PROJECT_LOG",
   arcade:    "HIGH SCORES",
+  oldfilm:   "Filmografia",
+  sketch:    "Obras",
+  rpg:       "MISSÕES",
 };
 
 export function Projects() {
@@ -72,9 +75,23 @@ export function Projects() {
                 />
 
                 <div className="flex flex-col gap-4 p-6 flex-1">
-                  <h3 className="font-display font-semibold text-lg text-text">
-                    {project.title}
-                  </h3>
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="font-display font-semibold text-lg text-text leading-tight">
+                      {project.title}
+                    </h3>
+                    {project.status && (
+                      <span
+                        className="shrink-0 text-[10px] font-mono px-2 py-0.5 rounded-full border whitespace-nowrap"
+                        style={{
+                          color: project.status === "Concluído" ? "#52B788" : "var(--color-text-muted)",
+                          borderColor: project.status === "Concluído" ? "#52B78855" : "var(--color-border)",
+                          backgroundColor: project.status === "Concluído" ? "#52B78811" : "transparent",
+                        }}
+                      >
+                        {project.status}
+                      </span>
+                    )}
+                  </div>
                   <p className="text-text-muted text-sm leading-relaxed flex-1">
                     {project.description}
                   </p>
@@ -148,7 +165,7 @@ export function Projects() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8 backdrop-blur-md bg-black/60"
+            className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-8 backdrop-blur-md bg-black/60"
             onClick={() => setSelected(null)}
           >
             <motion.div
@@ -182,9 +199,23 @@ export function Projects() {
               {/* Content */}
               <div className="p-6 flex flex-col gap-4">
                 <div className="flex items-start justify-between gap-4">
-                  <h2 className="font-display font-bold text-xl text-text leading-tight">
-                    {selected.title}
-                  </h2>
+                  <div className="flex flex-col gap-1.5">
+                    <h2 className="font-display font-bold text-xl text-text leading-tight">
+                      {selected.title}
+                    </h2>
+                    {selected.status && (
+                      <span
+                        className="self-start text-[10px] font-mono px-2 py-0.5 rounded-full border"
+                        style={{
+                          color: selected.status === "Concluído" ? "#52B788" : "var(--color-text-muted)",
+                          borderColor: selected.status === "Concluído" ? "#52B78855" : "var(--color-border)",
+                          backgroundColor: selected.status === "Concluído" ? "#52B78811" : "transparent",
+                        }}
+                      >
+                        {selected.status}
+                      </span>
+                    )}
+                  </div>
                   <button
                     onClick={() => setSelected(null)}
                     className="shrink-0 text-text-muted hover:text-text transition-colors mt-0.5 cursor-pointer"

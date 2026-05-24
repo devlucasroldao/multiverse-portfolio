@@ -13,6 +13,9 @@ const TITLES: Record<ThemeId, string> = {
   western:   "Ferramentas do Ofício",
   cyberpunk: "TECH_MATRIX",
   arcade:    "POWER-UPS",
+  oldfilm:   "Equipamentos",
+  sketch:    "Meu Arsenal",
+  rpg:       "HABILIDADES",
 };
 
 const CATEGORIES: { value: Category; label: string }[] = [

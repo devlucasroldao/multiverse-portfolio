@@ -6,11 +6,11 @@ import { Menu, X } from "lucide-react";
 import { useTheme, type ThemeId } from "@/app/context/ThemeContext";
 
 const SECTIONS = [
-  { id: "sobre",      emoji: "👤", label: { default: "Sobre", retro2000: "ABOUT", western: "Pistoleiro", cyberpunk: "PROFILE", arcade: "PLAYER" } },
-  { id: "stack",      emoji: "⚡", label: { default: "Stack", retro2000: "STACK", western: "Ferramentas", cyberpunk: "TECH", arcade: "WEAPONS" } },
-  { id: "projetos",   emoji: "🚀", label: { default: "Projetos", retro2000: "PORTFOLIO", western: "Missões", cyberpunk: "PROJECTS", arcade: "SCORES" } },
-  { id: "trajetoria", emoji: "📅", label: { default: "Trajetória", retro2000: "HISTORY", western: "Jornada", cyberpunk: "TIMELINE", arcade: "STORY" } },
-  { id: "contato",    emoji: "💬", label: { default: "Contato", retro2000: "CONTACT", western: "Telegrama", cyberpunk: "CONNECT", arcade: "CONTINUE" } },
+  { id: "sobre",      emoji: "👤", label: { default: "Sobre",     retro2000: "ABOUT",     western: "Pistoleiro",  cyberpunk: "PROFILE",  arcade: "PLAYER",   oldfilm: "O Diretor", sketch: "Quem sou", rpg: "HERÓI"    } },
+  { id: "stack",      emoji: "⚡", label: { default: "Stack",     retro2000: "STACK",     western: "Ferramentas", cyberpunk: "TECH",     arcade: "WEAPONS",  oldfilm: "Equip.",   sketch: "Arsenal",  rpg: "SKILLS"   } },
+  { id: "projetos",   emoji: "🚀", label: { default: "Projetos",  retro2000: "PORTFOLIO", western: "Missões",     cyberpunk: "PROJECTS", arcade: "SCORES",   oldfilm: "Filmes",   sketch: "Obras",    rpg: "MISSÕES"  } },
+  { id: "trajetoria", emoji: "📅", label: { default: "Trajetória",retro2000: "HISTORY",   western: "Jornada",    cyberpunk: "TIMELINE", arcade: "STORY",    oldfilm: "Roteiro",  sketch: "Jornada",  rpg: "LORE"     } },
+  { id: "contato",    emoji: "💬", label: { default: "Contato",   retro2000: "CONTACT",   western: "Telegrama",  cyberpunk: "CONNECT",  arcade: "CONTINUE", oldfilm: "Contato",  sketch: "Contato",  rpg: "ALIANÇA"  } },
 ] as const satisfies Array<{ id: string; emoji: string; label: Record<ThemeId, string> }>;
 
 // Arc positions: items fan from directly above (90°) to directly left (180°)

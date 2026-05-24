@@ -20,6 +20,12 @@ const TOOLTIP_CLASS: Record<ThemeId, string> = {
     "bg-background border border-primary text-primary px-3 py-1 text-xs font-mono shadow-theme-glow",
   arcade:
     "bg-primary text-background border-2 border-text px-3 py-1 text-xs font-mono",
+  oldfilm:
+    "bg-surface border border-primary text-text px-3 py-1.5 text-xs font-mono",
+  sketch:
+    "bg-surface border-2 border-primary text-text px-3 py-1.5 text-xs font-mono",
+  rpg:
+    "bg-surface border border-primary text-primary px-3 py-1.5 text-xs font-mono shadow-theme-glow",
 };
 
 export function Tooltip({ content, children }: TooltipProps) {
@@ -45,7 +51,7 @@ export function Tooltip({ content, children }: TooltipProps) {
             exit={{ opacity: 0, scale: 0.82, y: 6 }}
             transition={{ duration: 0.14 }}
             className={[
-              "absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap z-[200] pointer-events-none",
+              "absolute bottom-full left-1/2 -translate-x-1/2 mb-2 whitespace-nowrap z-200 pointer-events-none",
               TOOLTIP_CLASS[theme],
             ].join(" ")}
           >

@@ -9,33 +9,81 @@ import { SoundToggle } from "@/app/components/ui/SoundToggle";
 
 const NAV_LINKS: { label: Record<ThemeId, string>; href: string }[] = [
   {
-    label: { default: "Sobre", retro2000: "ABOUT", western: "O Pistoleiro", cyberpunk: "PROFILE", arcade: "PLAYER" },
+    label: {
+      default:   "Sobre",
+      retro2000: "ABOUT",
+      western:   "O Pistoleiro",
+      cyberpunk: "PROFILE",
+      arcade:    "PLAYER",
+      oldfilm:   "O Diretor",
+      sketch:    "Quem sou",
+      rpg:       "HERÓI",
+    },
     href: "#sobre",
   },
   {
-    label: { default: "Stack", retro2000: "STACK.txt", western: "Ferramentas", cyberpunk: "TECH_STACK", arcade: "WEAPONS" },
+    label: {
+      default:   "Stack",
+      retro2000: "STACK.txt",
+      western:   "Ferramentas",
+      cyberpunk: "TECH_STACK",
+      arcade:    "WEAPONS",
+      oldfilm:   "Equipamentos",
+      sketch:    "Rabiscos",
+      rpg:       "HABILIDADES",
+    },
     href: "#stack",
   },
   {
-    label: { default: "Projetos", retro2000: "PORTFOLIO", western: "Missões", cyberpunk: "PROJECTS", arcade: "SCORES" },
+    label: {
+      default:   "Projetos",
+      retro2000: "PORTFOLIO",
+      western:   "Missões",
+      cyberpunk: "PROJECTS",
+      arcade:    "SCORES",
+      oldfilm:   "Filmografia",
+      sketch:    "Obras",
+      rpg:       "MISSÕES",
+    },
     href: "#projetos",
   },
   {
-    label: { default: "Trajetória", retro2000: "HISTORY", western: "Jornada", cyberpunk: "TIMELINE", arcade: "STORY" },
+    label: {
+      default:   "Trajetória",
+      retro2000: "HISTORY",
+      western:   "Jornada",
+      cyberpunk: "TIMELINE",
+      arcade:    "STORY",
+      oldfilm:   "Filmografia",
+      sketch:    "Jornada",
+      rpg:       "LORE",
+    },
     href: "#trajetoria",
   },
   {
-    label: { default: "Contato", retro2000: "CONTACT", western: "Telegrama", cyberpunk: "CONNECT", arcade: "CONTINUE" },
+    label: {
+      default:   "Contato",
+      retro2000: "CONTACT",
+      western:   "Telegrama",
+      cyberpunk: "CONNECT",
+      arcade:    "CONTINUE",
+      oldfilm:   "Contato",
+      sketch:    "Fale comigo",
+      rpg:       "ALIANÇA",
+    },
     href: "#contato",
   },
 ];
 
 const LOGO: Record<ThemeId, string> = {
   default:   "< LR />",
-  retro2000: "LR.exe",
+  retro2000: "LUCAS_ROLDAO.exe",
   western:   "⚡ L.Roldão",
-  cyberpunk: "[LR_DEV]",
-  arcade:    "▶ LR",
+  cyberpunk: "LUCAS://ROLDAO",
+  arcade:    "▶ LUCAS ROLDÃO",
+  oldfilm:   "Lucas Roldão",
+  sketch:    "Lucas Roldão",
+  rpg:       "Lucas, o Desenvolvedor",
 };
 
 export function Navbar() {
@@ -58,7 +106,7 @@ export function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={mounted ? { y: 0, opacity: 1 } : {}}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-md border-b border-border relative"
+      className="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-md border-b border-border"
     >
       <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
         {/* Logo */}

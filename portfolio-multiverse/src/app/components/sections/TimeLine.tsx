@@ -11,6 +11,9 @@ const TITLES: Record<ThemeId, string> = {
   western:   "A Longa Jornada",
   cyberpunk: "TIMELINE_DATA",
   arcade:    "STORY MODE",
+  oldfilm:   "O Roteiro da Vida",
+  sketch:    "Minha Jornada",
+  rpg:       "LORE DO HERÓI",
 };
 
 const TYPE_ICONS: Record<string, string> = {

@@ -11,6 +11,9 @@ const TITLES: Record<ThemeId, string> = {
   western:   "Mande um Telegrama",
   cyberpunk: "CONNECT_REQUEST",
   arcade:    "CONTINUE?",
+  oldfilm:   "Entre em Contato",
+  sketch:    "Bate um Papo",
+  rpg:       "FORJAR ALIANÇA",
 };
 
 const TAGLINES: Record<ThemeId, string> = {
@@ -19,40 +22,35 @@ const TAGLINES: Record<ThemeId, string> = {
   western:   "Se você tem um trabalho, eu sou o parceiro certo.",
   cyberpunk: "Inicializando canal de comunicação seguro...",
   arcade:    "INSERT COIN — press any link to start",
-};
-
-const EASTER_EGGS: Record<ThemeId, string> = {
-  default:   "feat: add human to project — closes #42",
-  retro2000: "Powered by Internet Explorer 6.0 ☆ Best viewed in 800×600",
-  western:   "Nenhum pixel foi ferido durante a criação deste portfólio.",
-  cyberpunk: "// TODO: hire this dev before the competition does",
-  arcade:    "↑ ↑ ↓ ↓ ← → ← → B A — you found the easter egg",
+  oldfilm:   "Uma boa história começa com uma conversa.",
+  sketch:    "Toda grande obra começa com uma ideia compartilhada.",
+  rpg:       "Todo herói precisa de uma missão. Vamos criar a sua.",
 };
 
 const CONTACTS = [
   {
     label: "LinkedIn",
-    href:  "https://linkedin.com/in/seunome",
+    href:  "https://www.linkedin.com/in/devlucasroldao/",
     Icon:  Link2,
     color: "#0A66C2",
   },
   {
     label: "GitHub",
-    href:  "https://github.com/seunome",
+    href:  "https://github.com/devlucasroldao",
     Icon:  GitBranch,
-    color: "#6366F1",
+    color: "#6e5494",
   },
   {
     label: "WhatsApp",
-    href:  "https://wa.me/5511999999999",
+    href:  "https://wa.me/5551999611692",
     Icon:  MessageCircle,
     color: "#25D366",
   },
   {
     label: "E-mail",
-    href:  "mailto:contato@seunome.dev",
+    href:  "mailto:lucasroldao2802@gmail.com",
     Icon:  Mail,
-    color: "#F472B6",
+    color: "#52B788",
   },
 ] as const;
 
@@ -108,22 +106,23 @@ export function Contact() {
           ))}
         </div>
 
-        {/* Easter egg */}
+        {/* Visible easter egg (dim, hover reveals) */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-xs text-text-dim font-mono opacity-40 hover:opacity-100 transition-opacity duration-300 cursor-default"
+          className="text-xs text-text-dim font-mono opacity-30 hover:opacity-80 transition-opacity duration-500 cursor-default"
         >
-          {EASTER_EGGS[theme]}
+          Arroio do Sal — RS, Brasil · lucasroldao2802@gmail.com
         </motion.p>
 
         {/* Hidden selectable easter egg */}
         <p
           className="text-xs font-mono select-all"
           style={{ color: "transparent", userSelect: "text" }}
+          aria-hidden
         >
-          Você encontrou o easter egg. Me manda uma mensagem falando qual tema preferiu 😄
+          Você achou o easter egg! Me manda uma mensagem dizendo qual universo preferiu 😄 — @devlucasroldao
         </p>
       </div>
     </section>

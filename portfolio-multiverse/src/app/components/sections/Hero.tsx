@@ -11,14 +11,17 @@ import { GlitchText } from "@/app/components/effects/GlitchText";
 import { Tooltip } from "@/app/components/ui/Tooltip";
 
 const TAGLINES: Record<ThemeId, string> = {
-  default:   "Desenvolvedor · Designer · Growth Marketer",
-  retro2000: ">> DESENVOLVEDOR_FULL_STACK.exe <<<",
-  western:   "O pistoleiro do código. Rápido. Preciso. Criativo.",
-  cyberpunk: "DEV://DESIGNER//GROWTH_HACKER",
-  arcade:    "PLAYER 1 — FULL STACK DEV",
+  default:   "Cada projeto é um universo. Cada solução, uma obra.",
+  retro2000: ">> LUCAS_ROLDAO.exe CARREGANDO... CRIATIVIDADE: 100% <<",
+  western:   "Um jovem do sul com código na mão e ideia na cabeça.",
+  cyberpunk: "DEV://CRIATIVO//SEM_LIMITES//ARROIO_DO_SAL_RS",
+  arcade:    "PLAYER 1 — LUCAS ROLDÃO — LIVES: ∞",
+  oldfilm:   "Um jovem, uma câmera, um editor de código.",
+  sketch:    "Rabiscando o futuro, uma linha de código por vez.",
+  rpg:       "Nível 1 · Classe: Desenvolvedor Criativo · XP: Infinito",
 };
 
-const NAME = "Seu Nome";
+const NAME = "Lucas Roldão";
 
 // ── Background particles ──────────────────────────────────────────────────
 interface Particle {
@@ -96,7 +99,7 @@ export function Hero() {
         className="absolute inset-0 pointer-events-none"
         aria-hidden
       >
-        {theme === "default" && <HeroParticles />}
+        {(theme === "default" || theme === "oldfilm" || theme === "rpg") && <HeroParticles />}
       </motion.div>
 
       {/* Main content — parallax foreground */}
@@ -119,7 +122,7 @@ export function Hero() {
           <span className="text-sm text-text-muted">Disponível para projetos</span>
         </motion.div>
 
-        {/* Name — TextReveal for default/western/arcade, GlitchText for cyber/retro */}
+        {/* Name — TextReveal for most themes, GlitchText for cyber/retro */}
         <motion.h1
           variants={item}
           className="text-5xl sm:text-7xl font-display font-bold text-text leading-tight tracking-tight"
@@ -151,8 +154,8 @@ export function Hero() {
           variants={item}
           className="text-text-muted max-w-md text-base leading-relaxed"
         >
-          Construo produtos digitais com foco em experiência, performance e
-          crescimento. Do design ao deploy.
+          Desenvolvedor Front-end · Estudante de ADS · Criativo nato.
+          Arroio do Sal — RS, Brasil.
         </motion.p>
 
         {/* Universe Button wrapped in MagneticButton */}
@@ -165,7 +168,7 @@ export function Hero() {
         {/* Theme orbs */}
         <motion.div
           variants={item}
-          className="flex items-center gap-2.5 mt-1"
+          className="flex items-center gap-2.5 mt-1 flex-wrap justify-center"
           role="group"
           aria-label="Escolher universo"
         >

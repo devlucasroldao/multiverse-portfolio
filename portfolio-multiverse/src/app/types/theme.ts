@@ -3,7 +3,10 @@ export type ThemeId =
   | "retro2000"
   | "western"
   | "cyberpunk"
-  | "arcade";
+  | "arcade"
+  | "oldfilm"
+  | "sketch"
+  | "rpg";
 
 export interface Project {
   id: string;
@@ -14,6 +17,8 @@ export interface Project {
   github?: string;
   image?: string;
   featured: boolean;
+  color: string;
+  status?: string;
 }
 
 export interface StackItem {

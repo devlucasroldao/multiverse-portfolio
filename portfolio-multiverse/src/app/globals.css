@@ -49,19 +49,19 @@ body {
    ─────────────────────────────────────────────────────────────────────────*/
 :root,
 [data-theme="default"] {
-  /* Cores */
-  --color-bg:           #080C14;
-  --color-surface:      #0D1420;
-  --color-surface-2:    #111927;
-  --color-border:       rgba(255, 255, 255, 0.07);
-  --color-primary:      #6366F1;
-  --color-primary-glow: rgba(99, 102, 241, 0.35);
-  --color-secondary:    #22D3EE;
-  --color-accent:       #F472B6;
-  --color-text:         #E8EAF0;
-  --color-text-muted:   #8892A4;
-  --color-text-dim:     #4A5568;
-  --color-overlay:      rgba(8, 12, 20, 0.85);
+  /* Cores — Paleta Lucas Roldão */
+  --color-bg:           #0D1B2A;
+  --color-surface:      #141D2E;
+  --color-surface-2:    #1A2540;
+  --color-border:       rgba(65, 90, 119, 0.5);
+  --color-primary:      #52B788;
+  --color-primary-glow: rgba(82, 183, 136, 0.35);
+  --color-secondary:    #778DA9;
+  --color-accent:       #52B788;
+  --color-text:         #E0E1DD;
+  --color-text-muted:   #778DA9;
+  --color-text-dim:     #415A77;
+  --color-overlay:      rgba(13, 27, 42, 0.85);
 
   /* Tipografia */
   --font-display: "Space Grotesk";
@@ -73,13 +73,13 @@ body {
   --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.5);
   --shadow-md:   0 4px 16px rgba(0, 0, 0, 0.6);
   --shadow-lg:   0 16px 48px rgba(0, 0, 0, 0.7);
-  --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.25);
+  --shadow-glow: 0 0 40px rgba(82, 183, 136, 0.2);
 
   /* Forma */
   --radius: 12px;
 
   /* Efeitos temáticos */
-  --theme-particle-color: rgba(99, 102, 241, 0.6);
+  --theme-particle-color: rgba(82, 183, 136, 0.6);
   --theme-scanlines: none;
   --theme-film-grain: none;
   --theme-border-style: solid;
@@ -88,7 +88,7 @@ body {
 
   /* Cursor */
   --cursor: default;
-  --cursor-color: #6366F1;
+  --cursor-color: #52B788;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -263,6 +263,160 @@ body {
   /* Efeitos temáticos */
   --theme-particle-color: rgba(255, 224, 0, 0.6);
   --theme-border-style: dashed;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   🎬 TEMA 6: FILME ANTIGO — P&B Cinematográfico
+   Preto e branco. Grão intenso. Nostalgia de película.
+   ─────────────────────────────────────────────────────────────────────────*/
+[data-theme="oldfilm"] {
+  --color-bg:           #0a0a0a;
+  --color-surface:      #141414;
+  --color-surface-2:    #1e1e1e;
+  --color-border:       rgba(255, 255, 255, 0.12);
+  --color-primary:      #d4c89a;
+  --color-primary-glow: rgba(212, 200, 154, 0.3);
+  --color-secondary:    #a09070;
+  --color-accent:       #e8dcc0;
+  --color-text:         #e8e8e8;
+  --color-text-muted:   #888888;
+  --color-text-dim:     #444444;
+  --color-overlay:      rgba(10, 10, 10, 0.92);
+
+  --font-display: "Playfair Display", serif;
+  --font-body:    "Playfair Display", serif;
+  --font-mono:    "DM Mono", monospace;
+  --font-accent:  "Bebas Neue", sans-serif;
+
+  --shadow-sm:   0 1px 3px rgba(0, 0, 0, 0.8);
+  --shadow-md:   0 4px 16px rgba(0, 0, 0, 0.9);
+  --shadow-lg:   0 16px 48px rgba(0, 0, 0, 0.95);
+  --shadow-glow: 0 0 30px rgba(212, 200, 154, 0.15);
+
+  --radius: 2px;
+
+  --theme-particle-color: rgba(212, 200, 154, 0.4);
+  --theme-border-style: solid;
+  --cursor-color: #d4c89a;
+}
+
+/* Efeito sépia + grain intenso no oldfilm */
+.oldfilm-effect {
+  filter: sepia(0.25) contrast(1.08);
+}
+.oldfilm-effect::after {
+  opacity: 0.07 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   ✏️ TEMA 7: RABISCO — Mundo Papel / Sketch
+   Fundo bege, tinta azul e vermelha, sensação de caderno.
+   ─────────────────────────────────────────────────────────────────────────*/
+[data-theme="sketch"] {
+  --color-bg:           #f5f0e8;
+  --color-surface:      #ede8dc;
+  --color-surface-2:    #e5dfd0;
+  --color-border:       rgba(60, 40, 20, 0.25);
+  --color-primary:      #2c5f8a;
+  --color-primary-glow: rgba(44, 95, 138, 0.2);
+  --color-secondary:    #8b4513;
+  --color-accent:       #c41e3a;
+  --color-text:         #1a1208;
+  --color-text-muted:   #5a4a32;
+  --color-text-dim:     #8a7a62;
+  --color-overlay:      rgba(245, 240, 232, 0.92);
+
+  --font-display: "Rye", "Georgia", serif;
+  --font-body:    "Playfair Display", serif;
+  --font-mono:    "DM Mono", monospace;
+  --font-accent:  "Bebas Neue", sans-serif;
+
+  --shadow-sm:   2px 2px 0 rgba(60, 40, 20, 0.2);
+  --shadow-md:   4px 4px 0 rgba(60, 40, 20, 0.15);
+  --shadow-lg:   6px 6px 0 rgba(60, 40, 20, 0.12);
+  --shadow-glow: 3px 3px 8px rgba(60, 40, 20, 0.1);
+
+  --radius: 3px;
+
+  --theme-particle-color: rgba(44, 95, 138, 0.4);
+  --theme-border-style: solid;
+  --cursor-color: #2c5f8a;
+}
+
+/* Textura de papel para sketch */
+[data-theme="sketch"] body {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* Scrollbar sketch */
+[data-theme="sketch"] html {
+  scrollbar-color: #2c5f8a #ede8dc;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   ⚔️ TEMA 8: RPG MEDIEVAL — The Witcher / Fantasy
+   Pergaminho antigo, ouro, sangue, tochas.
+   ─────────────────────────────────────────────────────────────────────────*/
+[data-theme="rpg"] {
+  --color-bg:           #0e0b07;
+  --color-surface:      #1a1409;
+  --color-surface-2:    #251c0e;
+  --color-border:       rgba(180, 140, 60, 0.3);
+  --color-primary:      #c9a227;
+  --color-primary-glow: rgba(201, 162, 39, 0.4);
+  --color-secondary:    #8b0000;
+  --color-accent:       #e8c84a;
+  --color-text:         #f0e6cc;
+  --color-text-muted:   #a89070;
+  --color-text-dim:     #6a5a40;
+  --color-overlay:      rgba(14, 11, 7, 0.95);
+
+  --font-display: "Rye", "Georgia", serif;
+  --font-body:    "Playfair Display", serif;
+  --font-mono:    "DM Mono", monospace;
+  --font-accent:  "Bebas Neue", sans-serif;
+
+  --shadow-sm:   0 2px 4px rgba(0,0,0,0.8), inset 0 1px 0 rgba(201,162,39,0.1);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.9), 0 0 20px rgba(201,162,39,0.05);
+  --shadow-lg:   0 8px 32px rgba(0,0,0,0.95), 0 0 40px rgba(139,0,0,0.1);
+  --shadow-glow: 0 0 20px rgba(201,162,39,0.3), 0 0 60px rgba(201,162,39,0.1);
+
+  --radius: 4px;
+
+  --theme-particle-color: rgba(201, 162, 39, 0.5);
+  --theme-border-style: solid;
+  --cursor-color: #c9a227;
+}
+
+/* Textura de pergaminho no RPG */
+[data-theme="rpg"] body {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 512px 512px;
+}
+
+/* Scrollbar RPG */
+[data-theme="rpg"] html {
+  scrollbar-color: #c9a227 #1a1409;
+}
+
+/* Partículas RPG (brasas) */
+.rpg-particles::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: none;
+  background:
+    radial-gradient(1px 1px at 20% 80%, rgba(201,162,39,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 20%, rgba(201,162,39,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 60%, rgba(139,0,0,0.2) 0%, transparent 100%);
+  animation: rpg-float 8s ease-in-out infinite;
+}
+
+@keyframes rpg-float {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50%       { opacity: 0.7; transform: translateY(-8px); }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────

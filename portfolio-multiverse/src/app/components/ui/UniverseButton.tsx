@@ -9,6 +9,9 @@ const BUTTON_TEXT: Record<ThemeId, string> = {
   western:   "Mudar de Território",
   cyberpunk: "SWITCH_UNIVERSE.exe",
   arcade:    "NEXT WORLD",
+  oldfilm:   "Próxima Cena",
+  sketch:    "Novo Rabisco",
+  rpg:       "NOVA JORNADA ⚔️",
 };
 
 const THEME_CLASSES: Record<ThemeId, string> = {
@@ -22,6 +25,12 @@ const THEME_CLASSES: Record<ThemeId, string> = {
     "rounded-sm border border-primary bg-transparent text-primary px-8 py-4 font-mono text-sm uppercase tracking-widest hover:bg-primary/10 shadow-theme-glow",
   arcade:
     "rounded-none border-4 border-primary bg-background text-primary px-8 py-4 font-mono text-xs uppercase tracking-widest hover:bg-primary hover:text-background",
+  oldfilm:
+    "rounded-sm border border-primary/60 bg-surface text-primary px-10 py-5 font-display tracking-wider hover:bg-primary/10 shadow-theme-md",
+  sketch:
+    "rounded-sm border-2 border-primary bg-surface text-primary px-10 py-5 font-display tracking-wide hover:bg-primary/10 shadow-theme-md",
+  rpg:
+    "rounded-sm border-2 border-primary bg-surface text-primary px-10 py-5 font-display tracking-wider hover:bg-primary/10 shadow-theme-glow",
 };
 
 export function UniverseButton() {

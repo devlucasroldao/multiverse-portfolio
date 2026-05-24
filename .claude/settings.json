@@ -15,7 +15,15 @@
       "Read(//c/Users/lucas/AppData/Local/Temp/**)",
       "Bash(npm install *)",
       "Read(//tmp/**)",
-      "Read(//c/tmp/**)"
+      "Read(//c/tmp/**)",
+      "Bash(ls /mnt/user-data/uploads/IMG_6881.jpeg 2>&1 && echo \"EXISTS\")",
+      "Read(//mnt/user-data/uploads/**)",
+      "Bash(find / -name \"IMG_6881*\" 2>/dev/null | head -5)",
+      "Read(//c//**)",
+      "Bash(mkdir -p \"c:/Users/lucas/Documents/MeusProjetos/multiverse-portfolio/portfolio-multiverse/public/images\" && echo \"OK\")"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\lucas\\Documents\\MeusProjetos\\multiverse-portfolio\\portfolio-multiverse\\public"
     ]
   }
 }
